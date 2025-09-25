@@ -6,7 +6,8 @@ import { Download, FileImage, Code, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { renderToCanvas, generateQrSvg, downloadCanvasAsImage, getCanvasBlob, type CanvasConfig } from "@/lib/qr";
+import Image from "next/image";
+import { renderToCanvas, generateQrSvg, type CanvasConfig } from "@/lib/qr";
 
 // Configuration interface for the preview component
 export interface PreviewConfig {
@@ -434,17 +435,18 @@ export function Preview({ config, className = "" }: PreviewProps) {
               {/* QR Code Display */}
               <div className="relative p-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
                 {qrDataUrl ? (
-                  <img
+                  <Image
                     src={qrDataUrl}
                     alt="QR Code"
                     className="border border-gray-300 rounded-sm block mx-auto cursor-pointer"
                     onClick={handleCopyToClipboard}
                     title="Click to copy to clipboard"
+                    width={config.size}
+                    height={config.size}
                     style={{
-                      width: `${config.size}px`,
-                      height: `${config.size}px`,
                       imageRendering: 'pixelated'
                     }}
+                    unoptimized
                   />
                 ) : (
                   <div
